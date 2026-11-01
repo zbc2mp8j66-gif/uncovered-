@@ -32,6 +32,32 @@ function chipsFor(f) {
       : [f.words.near ? 'near' : 'miss', `Answer is ${f.words.answerIs} than ${f.words.guessed}`],
   ]
 }
+// Seconds until the next puzzle (midnight US Eastern)
+function msUntilEasternMidnight() {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit',
+  }).formatToParts(new Date())
+  const get = (t) => Number(parts.find((p) => p.type === t).value)
+  const secs = (get('hour') % 24) * 3600 + get('minute') * 60 + get('second')
+  return (86400 - secs) * 1000
+}
+
+function Countdown() {
+  const [ms, setMs] = useState(msUntilEasternMidnight)
+  useEffect(() => {
+    let last = msUntilEasternMidnight()
+    const id = setInterval(() => {
+      const next = msUntilEasternMidnight()
+      if (next > last) window.location.reload() // midnight passed: load the new puzzle
+      last = next
+      setMs(next)
+    }, 1000)
+    return () => clearInterval(id)
+  }, [])
+  const s = Math.floor(ms / 1000)
+  const pad = (n) => String(n).padStart(2, '0')
+  return <p className="note">Next book in {pad(Math.floor(s / 3600))}:{pad(Math.floor((s % 3600) / 60))}:{pad(s % 60)}</p>
+}
 
 export default function App() {
   const [anon] = useState(getAnonId)
@@ -210,7 +236,7 @@ export default function App() {
               {state.percentile !== undefined && <p>You beat {state.percentile}% of players today.</p>}
               <pre>{shareText}</pre>
               <button onClick={copyResult}>{copied ? 'Copied' : 'Copy result'}</button>
-              <p className="note">Come back tomorrow for a new book.</p>
+                            <Countdown />
             </div>
           )}
         </>
