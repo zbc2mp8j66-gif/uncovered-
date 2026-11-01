@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { db } from './_lib';
+import { db } from './_lib.js';
 
 // GET /api/books  ->  the autocomplete list (titles only; never reveals today's answer)
 export default async function handler(_req: VercelRequest, res: VercelResponse) {

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { db, MAX_GUESSES, today, validAnon, loadPuzzle, getOrCreatePlay, buildState } from './_lib';
+import { db, MAX_GUESSES, today, validAnon, loadPuzzle, getOrCreatePlay, buildState } from './_lib.js';
 
 // POST /api/guess  { anon: "<uuid>", bookId: 12 }   (bookId 0 = skip)
 export default async function handler(req: VercelRequest, res: VercelResponse) {

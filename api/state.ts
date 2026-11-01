@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { today, validAnon, loadPuzzle, getOrCreatePlay, buildState } from './_lib';
+import { today, validAnon, loadPuzzle, getOrCreatePlay, buildState } from './_lib.js';
 
 // GET /api/state?anon=<uuid>  ->  today's hints (only those earned), guesses so far, and result if finished
 export default async function handler(req: VercelRequest, res: VercelResponse) {
