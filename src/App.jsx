@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+import { playCorrect, playWrong, playLose, playSkip } from './sounds'
 
 const SPINES = ['#7a2e3a', '#2f5d3a', '#c98a2b', '#3b4f7a', '#8a5a33', '#5a2f6b', '#a8442e', '#2c6b6b']
 
@@ -103,6 +104,10 @@ export default function App() {
       if (!r.ok) throw new Error(data.error || 'Something went wrong.')
       setState(data)
       setQuery('')
+      if (data.solved) playCorrect()
+      else if (data.done) playLose()
+      else if (bookId === 0) playSkip()
+      else playWrong
     } catch (e) {
       setError(e.message)
     } finally {

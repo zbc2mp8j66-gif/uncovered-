@@ -1,0 +1,19 @@
+/* Library scenery for Uncovered. Colors come from the variables in App.css. */
+body{background:var(--wall)}
+main{position:relative;z-index:1}
+.decor{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(242,177,52,.14),transparent 55%),repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 4px,transparent 4px 40px),var(--bg)}
+.decor::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.5) 100%)}
+.side{position:absolute;top:0;height:100%;width:clamp(96px,14vw,170px)}
+.side.left{left:0}.side.right{right:0}
+.side svg{width:100%;height:100%;display:block;shape-rendering:crispEdges}
+.flame{animation:flicker .5s steps(1) infinite}
+.glow{animation:pulse 3s ease-in-out infinite}
+.twinkle{animation:twinkle 2.4s steps(1) infinite}
+.mote{position:absolute;bottom:-8px;width:3px;height:3px;background:var(--amber);opacity:0;animation:rise linear infinite}
+@keyframes flicker{50%{opacity:.55}}
+@keyframes pulse{50%{opacity:.6}}
+@keyframes twinkle{50%{opacity:.2}}
+@keyframes rise{0%{transform:translate(0,0);opacity:0}10%{opacity:.8}90%{opacity:.6}100%{transform:translate(24px,-105vh);opacity:0}}
+.sound{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:8px;z-index:5;font-family:"Press Start 2P",monospace;font-size:.5rem;padding:8px 10px}
+@media (max-width:760px){.side{display:none}}
+@media (prefers-reduced-motion:reduce){.flame,.glow,.twinkle,.mote{animation:none}.mote{opacity:.5}}
